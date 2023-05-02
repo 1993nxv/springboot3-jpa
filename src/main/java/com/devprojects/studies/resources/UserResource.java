@@ -13,7 +13,7 @@ import com.devprojects.studies.entities.User;
 import com.devprojects.studies.services.UserService;
 
 @RestController
-@RequestMapping(value = "/users/")
+@RequestMapping(value = "/users")
 public class UserResource {
 	
 	@Autowired
