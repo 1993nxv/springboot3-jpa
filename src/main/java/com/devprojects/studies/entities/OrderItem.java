@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.devprojects.studies.entities.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -15,24 +16,25 @@ public class OrderItem implements Serializable{
 	private static final long serialVersionUID = 6893672833011652126L;
 	
 	@EmbeddedId
-	private OrderItemPK id;
+	private OrderItemPK id = new OrderItemPK();
 	
 	private Integer quantity;
-	private Double prince;
+	private Double price;
 	
 	public OrderItem() {}
 
-	public OrderItem(Order order, Product product, Integer quantity, Double prince) {
+	public OrderItem(Order order, Product product, Integer quantity, Double price) {
 		id.setOrder(order);
 		id.setProduct(product);
 		this.quantity = quantity;
-		this.prince = prince;
+		this.price = price;
 	}
 	
 	public Order getOrder() {
 		return id.getOrder();
 	}
 	
+	@JsonIgnore
 	public void setOrder(Order order) {
 		id.setOrder(order);
 	}
@@ -53,12 +55,12 @@ public class OrderItem implements Serializable{
 		this.quantity = quantity;
 	}
 
-	public Double getPrince() {
-		return prince;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setPrince(Double prince) {
-		this.prince = prince;
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
 	@Override
