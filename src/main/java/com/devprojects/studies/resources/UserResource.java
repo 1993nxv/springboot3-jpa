@@ -2,6 +2,7 @@ package com.devprojects.studies.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.devprojects.studies.DTO.UserDTO;
 import com.devprojects.studies.entities.User;
 import com.devprojects.studies.services.UserService;
 
@@ -26,15 +28,20 @@ public class UserResource {
 	private UserService service;
 	
 	@GetMapping
-	public ResponseEntity<List<User>> findAll(){
+	public ResponseEntity<List<UserDTO>> findAll(){
 		List<User> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+		List<UserDTO> listDTO = list.stream()
+				.map(x -> new UserDTO(x))
+				.collect(Collectors.toList());
+
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<User> findById(@PathVariable Long id){
-		User obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<UserDTO> findById(@PathVariable Long id){
+		User user = service.findById(id);
+		UserDTO userDTO = new UserDTO(user);
+		return ResponseEntity.ok().body(userDTO);
 	}
 	
 	@PostMapping
