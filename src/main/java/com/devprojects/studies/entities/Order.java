@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.devprojects.studies.DTO.UserDTO;
 import com.devprojects.studies.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -78,8 +79,9 @@ public class Order implements Serializable {
 			this.orderStatus = orderStatus.getCode();
 	}
 
-	public User getClient() {
-		return client;
+	public UserDTO getClient() {
+		UserDTO userDTO = new UserDTO(client);
+		return userDTO;
 	}
 
 	public void setClient(User client) {
